@@ -200,12 +200,22 @@
             }
             
             .gallery-container {
-                width: min(90%, 800px);
-                margin-inline: auto;
 
-                display: grid;
-                grid-template-columns: 1fr; /* One column on mobile */
-                gap: 20px;
+                display: flex;
+                flex-direction: column;
+                width: min(90%, 800px);
+                justify-content: center;
+                align-items: center;
+                padding: 1rem 0;
+            }
+
+            .gallery-container iframe {
+                width: min(100%, 800px);
+                height: 600px;
+                border: 1px solid #bfcbda88;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
             }
 
             .gallery-card {
@@ -382,7 +392,7 @@
                     tabindex="0"
                 ></iframe>
 
-                <a href="/full-calendar" class="btn">See All Events</a>
+                    <a href="/full-calendar" class="btn">See All Events</a>
             </section>
             
             <section id="register" class="action-box">
