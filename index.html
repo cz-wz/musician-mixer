@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Title</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Special+Elite&display=swap" rel="stylesheet">
+        
+        <style>
+            /* ==================================================
+            1. SETTINGS & RESET 
+            =====================================================*/
+            html {
+                scroll-behavior: smooth;
+            }
+
+            :root {
+                --color-dark: rgba(20,0,10,1);
+                --color-secondary: rgb(80, 0, 40);
+                --color-glow: rgb(242, 255, 100);
+                --color-neutral: rgb(255, 255, 255);
+                --color-white: #ffffff ;
+
+                --bg-body: var(--color-dark);
+                --bg-card: var(--color-secondary);
+
+                --border-color: var(--color-glow);
+                --border-radius: 12px;
+                --card-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                
+                /* Font families */
+                --font-heading: "Special Elite", system-ui;
+                --font-body: "Montserrat", sans-serif;
+                 
+                /* Font sizes */
+                --size-h1: clamp(3rem, 5vw + 1rem, 5rem);
+                --size-h2: clamp(2rem, 5vw + 1rem, 4rem);
+                --size-h3: clamp(1.6rem, 5vw + 1rem, 3.5rem);
+                --size-body: clamp(1rem, 5vw + 0.75rem, 1.25rem);
+
+                /* Line heights and letter spacing */
+                --line-height-body: 1.6;
+                --line-height-tight: 1.2;
+                --letter-spacing-wide: 0.05em;
+
+                --text-main: var(--color-neutral);
+                --text-muted: ;
+                --text-inverse: var(--color-dark);;
+                --link-color: var(--color-glow);
+                --link-hover: var(--color-white);
+            }
+
+            * {
+                box-sizing: border-box; /* Essential for padding to not break width */
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-color: var(--bg-body); /* Background color for the whole page */
+                color: var(--text-main);               /* Default text color */
+
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                
+                font-family: var(--font-body);
+                font-optical-sizing: auto;
+                font-weight: 400;
+                font-size: var(--size-body);
+                font-style: normal;
+
+                line-height: var(--line-height-body);
+                -webkit-font-smoothing: antialiased; /* Improves font rendering */   
+            }
+
+            .spotlight-container {
+                position: fixed;
+                width: 100vw; height: 100vh;
+                background: #050505;
+                z-index: -2;
+                overflow: hidden;
+            }
+
+            .spotlight {
+                position: absolute;
+                width: 600px; height: 600px;
+                border-radius: 50%;
+                filter: blur(100px);
+                opacity: 0.4;
+                animation: drift 20s infinite alternate;
+            }
+
+            .s1 { background: #6366f1; top: -10%; left: -10%; }
+            .s2 { background: #ec4899; bottom: -10%; right: -10%; animation-delay: -5s; }
+
+            @keyframes drift {
+                from { transform: translate(0, 0) rotate(0deg); }
+                to { transform: translate(20%, 20%) rotate(30deg); }
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-heading);
+                line-height: var(--line-height-tight);
+                letter-spacing: var(--letter-spacing-wide);
+                margin-bottom: 0.5em;
+            }
+
+            h1 {font-size: var(--size-h1); animation: title-glow 6s ease-in-out infinite;}
+            h2 {font-size: var(--size-h2);}
+            h3 {font-size: var(--size-h3);}
+
+            @keyframes title-glow {
+                0%, 100% { text-shadow: 0 0 0px var(--color-white), 0 0 0px var(--color-white); }
+                50% { text-shadow: 0 0 3px var(--color-glow), 0 0 3px var(--color-glow); }
+            }
+
+            a {
+                color: var(--link-color);
+                transition: color 0.3s ease;
+            }
+
+            a:hover {
+                color: var(--link-hover);
+            }
+            
+            details{
+                margin-bottom: 15px;
+            }
+
+            /* =====================================================
+               2. MASTER UTILITY STYLES
+               =====================================================*/
+            .hero-banner {
+                position: relative;
+                display: block;
+                padding: clamp(3rem, 4vw + 1rem, 20rem);
+                /* clamp(2rem, 4vw + 1rem, 4rem);*/
+                background: url('your-hero-image.jpg') center/cover no-repeat;
+            }
+
+            /* The Overlay: Creates a dark tint over the image */
+            .hero-banner::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0, 0, 0, 0.5); 
+            }
+
+            /* Ensures content sits above the tint */
+            .hero-banner > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            .info-card {
+                position: relative;
+                width: min(90%, 800px);;
+                margin: 2rem auto;
+                padding: clamp(1rem, 4vw + 1rem, 3rem);
+
+                flex: 0 0 100%;            /* Each card takes up 100% of the width */
+                scroll-snap-align: center; /* Snaps the card to the center */
+                
+                background-color: #f9f7f1; /* Classic "Old Paper" cream */
+                background-image: 
+                    linear-gradient(135deg, rgba(0,0,0,0.02) 25%, transparent 25%),
+                    linear-gradient(225deg, rgba(0,0,0,0.02) 25%, transparent 25%);
+                
+                color: var(--text-inverse);
+                
+                /*This creates a slightly "wobbly" rectangle */
+                clip-path: polygon(
+                    0% 2%, 100% 0%, 
+                    98% 100%, 2% 98%
+                );
+                
+                /* A slight rotation makes it look like it was tossed on a table */
+                transform: rotate(1deg);
+
+                box-shadow: 
+                    2px 5px 15px rgba(0,0,0,0.1), /* General lift */
+                    -2px -2px 10px rgba(255,255,255,0.5) inset; /* Inner highlight on "folds" */
+            }
+
+            .info-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                border-width: 0 50px 50px 0;
+                border-style: solid;
+                border-color: #f9f7f1 #050505 #e3e1d9 #f9f7f1; /* Colors for the 'fold' and shadow */
+                display: block;
+                width: 0;
+                box-shadow: -3px 3px 5px rgba(0,0,0,0.1); /* Shadow of the fold */
+            }
+            
+            .gallery-container {
+                width: min(90%, 800px);
+                margin-inline: auto;
+
+                display: grid;
+                grid-template-columns: 1fr; /* One column on mobile */
+                gap: 20px;
+            }
+
+            .gallery-card {
+                background: var(--bg-card);
+                padding: 15px;
+                border-radius: var(--border-radius);
+            }
+            
+            .action-box {
+                width: min(90%, 800px);
+                padding: clamp(1rem, 4vw + 1rem, 3rem);
+                margin: 3rem auto;
+                
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 200px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); /* Smooth transition */
+                
+                /* The "Off" or "Dim" State Glow */
+                box-shadow: 
+                    0 0 20px rgba(99, 102, 241, 0.1), 
+                    0 0 40px rgba(0, 0, 0, 0.5);
+
+                will-change: transform, box-shadow; /* Pre-optimizes the phone's GPU */
+            }
+
+                /* The "Bright" State (Triggered by Scroll) */
+            .action-box.is-focused {
+                background: rgba(255, 255, 0, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                color: var(--text-inverse);
+                transform: scale(1.1); /* Subtle pop */
+                
+                /* Intense layered glow */
+                box-shadow: 
+                    0 0 60px rgba(255, 255, 0, 0.6),  /* Inner bright core */
+                    0 0 120px rgba(255, 255, 0, 0.4),  /* Mid-glow */
+                    0 0 180px rgba(255, 255, 0, 0.2);  /* Large atmospheric glow */
+                }
+            /*
+                .action-box {
+                background-color: var(--color-glow);
+                border-top: 20px solid var(--color-secondary);
+                border-bottom: 20px solid var(--color-secondary);
+                color: var(--text-inverse);
+
+                width: 100%;
+
+                padding: 40px 20px;
+                margin-top: 40px;
+            }*/
+
+            .action-box button, .action-box .btn {
+                background-color: var(--color-secondary);
+                color: var(--text-main);
+                padding: 15px 30px;
+                border: none;
+                border-radius: 50px; /* Rounded pill shape */
+                font-weight: bold;
+                
+                cursor: pointer;
+                transition: transform 0.2s ease;
+            }
+
+            .action-box button:hover {
+                transform: scale(1.05); /* Slight grow on hover */
+            }
+            
+
+            .divider { width: 100%; line-height: 0; transform: rotate(180deg); }
+            .divider svg { width: 100%; height: 100px; }
+            .divider svg path {
+                /* This creates the 'neon' effect */
+                filter: 
+                    drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) 
+                    drop-shadow(0 0 15px rgba(99, 102, 241, 0.6)); /* A hint of your spotlight purple */
+                    
+                /* Pro Move: Animate the glow to "pulse" like music */
+                animation: pulse-glow 6s ease-in-out infinite;
+                }
+
+                @keyframes pulse-glow {
+                0%, 100% { opacity: 0.8; stroke-width: 2; }
+                50% { opacity: 1; stroke-width: 4; }
+                }
+
+            /* ====================================================
+               2. SECTION-SPECIFIC
+               ====================================================*/
+            .testimonial-slider {
+                display: flex;
+                overflow-x: auto;          /* Allows horizontal scrolling */
+                scroll-snap-type: x mandatory; /* The "snap" magic */
+                gap: 20px;
+                padding: 20px;
+                scrollbar-width: none;     /* Hides scrollbar on Firefox */
+            }
+
+            .testimonial-slider::-webkit-scrollbar {
+                display: none;             /* Hides scrollbar on Chrome/Safari */
+            }
+
+            .testimonial-card {
+                flex: 0 0 100%;            /* Each card takes up 100% of the width */
+                scroll-snap-align: center; /* Snaps the card to the center */
+                background: var(--white);
+                padding: 40px;
+                border-radius: var(--border-radius);
+                box-shadow: var(--card-shadow);
+            }
+
+            /* This ensures your photos don't "break" the mobile screen */
+            #media img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+
+            /* ===========================================================
+               4. RESPONSIVE (Desktop Overrides)
+               ===========================================================*/
+            /* This code only runs when the screen is wider than 768px (Tablets/Laptops) */
+            @media (min-width: 768px) {
+               
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <nav>
+
+            </nav>
+            
+        </header>
+
+        <main>
+            <div class="spotlight-container">
+                <div class="spotlight s1"></div>
+                <div class="spotlight s2"></div>
+            </div>
+
+            <section id="page-intro" class="hero-banner">
+                <h1>Musician Mixer</h1>
+                <h2>Show up and let the music do the talking</h2>
+            </section>
+
+            <div class="divider">
+                <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path fill="none" 
+                        stroke="white" 
+                        stroke-width="3" 
+                        stroke-linecap="round" 
+                        d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,202.7C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,90.7L1440,64L144"></path>
+                </svg>
+            </div>
+
+            <section id="description" class="info-card">
+                <h2>Let's Jam!</h2>
+                <p>The Musician Mixer meets every other Friday at Bellinghome School of Music (2512 Meridian Street) 7-9pm. Registration is <a href="#register">required</a> so we know whether to set up 1 studio or more!</p>
+            </section>
+            
+            <section id="next-events" class="gallery-container">
+                <h2>Upcoming Musician Mixers</h2>
+
+               [ecs-list-events limit="3" category="music-mixer" image="yes" date_format="F j, Y" time_format="g:i a" view="list" / ]
+
+                    <a href="/full-calendar" class="btn">See All Events</a>
+            </section>
+            
+            <section id="register" class="action-box">
+                <h2>Reserve Your Spot</h2>
+                <button>Reserve My Spot</button>
+            </section>
+
+            <section id="testimonials" class="gallery-container">
+                <h2>What the Musicians Say</h2>
+                <div class="testimonial-slider">
+                    <div class="info-card">
+                        <p>"The Music Mixer has been an incredible experience! I've met so many talented musicians and collaborated on some amazing projects."</p>
+                        <span>- Alex R.</span>
+                    </div>
+                    <div class="info-card">
+                        <p>"I never thought I'd find a community of musicians so welcoming and inspiring. The Music Mixer is my favorite event each month!"</p>
+                        <span>- Jamie L.</span>
+                    </div>
+                    <div class="info-card">
+                        <p>"As a beginner, I was nervous about joining, but the supportive environment at the Music Mixer made me feel right at home."</p>
+                        <span>- Taylor S.</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="community" class="action-box">
+                <h2>Join Our Community</h2>
+                <p>Connect with fellow musicians and stay updated on upcoming events by joining our community!</p>
+                <button>Join Now</button>
+            </section>
+
+            <section id="faqs" class="info-card">
+                <h2>Frequently Asked Questions</h2>
+                <details>
+                    <summary>What genres of music are welcome?</summary>
+                    <p>All genres are welcome! Whether you're into rock, jazz, classical, electronic, or any other style, we encourage you to bring your unique sound to the mixer.</p>
+                </details>
+                <details>
+                    <summary>Do I need to bring my own instruments?</summary>
+                    <p>While we have some basic instruments available, we recommend bringing your own to ensure you're comfortable and familiar with your gear.</p>
+                </details>
+                <details>
+                    <summary>Is there a fee to participate?</summary>
+                    <p>No, the Music Mixer is free to attend! We want to make music collaboration accessible to everyone in the community.</p> 
+                </details>
+            </section>
+            
+            <section id="subscribe" class="action-box">
+                <h2>Stay Updated!</h2>
+                <p>Subscribe to our newsletter to receive the latest news and updates about upcoming Musician Mixers.</p>
+                <button>Subscribe Now</button>
+            </section>
+            
+            <section id="newsletter" class="info-card">
+                
+            </section>
+            
+            <section id="comment" class="action-box"></section>
+            <section id="contact" class="action-box"></section>
+            <section id="submit" class="action-box"></section>
+
+            <section id="featured" class="gallery-container"></section>
+            <section id="media" class="gallery-container"></section>
+            <section id="resources" class="gallery-container"></section>
+            
+        </main>
+        
+        <footer class="global-footer">
+            <sitemap></sitemap>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            const boxes = document.querySelectorAll('.action-box');
+
+            const boxObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-focused');
+                } else {
+                    entry.target.classList.remove('is-focused');
+                }
+                });
+            }, { threshold: 0.2 });
+
+            boxes.forEach(box => boxObserver.observe(box));
+            });
+        </script>
+    </body>
+</html>

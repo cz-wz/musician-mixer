@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spotlight Background</title>
+        <style>
+            :root {
+
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #008888;
+                color: white;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+            }
+
+            .spotlight-container {
+                width: 100vw; height: 100vh;
+                position: fixed;
+                z-index: -2;
+            }
+
+            .spotlight {
+                position: absolute;
+                width: 20vw; height: 20vw;
+                border-radius: 50%;
+                filter: blur(4vw);
+                animation: drift 10s alternate infinite;
+                opacity: 0.6;
+            }
+
+            .s1 { background-color: #880022; top:-40%; left: 0%; animation-delay: 2s;}
+            .s2 { background-color: #0000ff; top:-20%; left: 20%; animation-delay: 4s;}
+            .s3 { background-color: #ffff00; top:-40%; left: 20%; animation-delay: 6s;}
+            .s4 { background-color: #008800; top: -20%; left:0%;}
+
+            @keyframes drift {
+                0% { transform: translate(0vw, 0vh); }
+                100% { transform: translate(60vw, 10vh);}
+            }
+
+            .info-card {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 2rem;
+                margin: 40vh auto;
+                width: fit-content; height: fit-content;
+                
+                background-color: rgba(255,255,255,0.1);
+                border-color: rgba(255,255,255,0.2);
+                border-style: solid;
+                border-radius: 2rem;
+                box-shadow: 1rem 1rem rgba(0,0,0,0.5);
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <div class="spotlight-container">
+                <div class="spotlight s1"></div>
+                <div class="spotlight s2"></div>
+                <div class="spotlight s3"></div>
+                <div class="spotlight s4"></div>
+            </div>
+            <div class="info-card">
+                <h1>Spotlight Background</h1>
+            </div>
+            <div class="info-card">
+                <h1>Spotlight Background</h1>
+            </div>
+            <div class="info-card">
+                <h1>Spotlight Background</h1>
+            </div>
+            
+        </main>
+    </body>
+</html>

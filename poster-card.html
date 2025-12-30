@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Poster Card</title>
+        <style>
+            :root {
+
+            }
+
+            * {
+                box-sizing: border-box;
+                margin:0;
+                padding:0; 
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                gap: 4rem;
+
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+                justify-items: center;
+
+                background-color: #333;
+                
+                font-family: ariel, sans-serif;
+
+            }
+
+            .poster-card {
+                background-color: #ffde00; /* Loud yellow */
+                border: 5px solid #000;
+                width: fit-content;
+                padding: 2rem;
+                margin: 2rem auto;
+                text-align: center;
+                box-shadow: 10px 10px 0px #000; /* Sharp "pop art" shadow */
+                position: relative;
+                overflow: hidden;
+
+            }
+
+            .poster-card::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                opacity: 0.3;
+                background-image: radial-gradient(#000 10%, transparent 10%);
+                background-size: 0.5rem 0.5rem; /* Tiny dots */
+                pointer-events: none;
+
+            }
+
+            .poster-card::after {
+                content: "";
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                transform: translateX(-50%) rotate(-2deg);
+                width: 100px;
+                height: 30px;
+                background: rgba(255, 255, 255, 0.3); /* Translucent tape */
+                backdrop-filter: blur(2px);
+                border-left: 2px solid rgba(0,0,0,0.05);
+                border-right: 2px solid rgba(0,0,0,0.05);
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section class="poster-card">
+                <h2>JOIN THE JAM</h2>
+                <p>We practice at this time, etc etc.</p>
+            </section>
+        </main>
+
+    </body>
+</html>
