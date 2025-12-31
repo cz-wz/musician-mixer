@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Musician Mixer Button Example</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-items: center;
+                justify-content: center;
+                align-content: center;
+                align-items: center;
+            }
+            /* The container defines the 3D space */
+.switch-perspective-container {
+  perspective: 600px;
+  display: inline-block;
+   /* The black housing frame */
+  padding: 4px;
+  background: #1a1a1a;
+  border-radius: 4px;
+  box-shadow: inset 0 10px 40px rgba(0,0,0,0.8);
+}
+
+.rocker-3d {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  /* Ensure the 3D transforms work on children */
+  transform-style: preserve-3d;
+  /* The pivot point is the dead center */
+  transform-origin: center center;
+  /* Smooth rocking motion */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* DEFAULT STATE: Tilted left side up */
+  transform: rotateY(-15deg);
+}
+
+/* The visible red face of the button */
+.rocker-text {
+  display: block;
+  padding: 15px 45px;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: white;
+  font-size: 18px;
+  
+  /* The red appearance with lighting gradient */
+  background: linear-gradient(to bottom, #e63e3e, #a82424);
+  
+  /* Lighting changes based on tilt */
+  box-shadow: 
+    inset 2px 0 5px rgba(255,255,255,0.2), /* Highlight left edge */
+    inset -2px 0 5px rgba(0,0,0,0.4);    /* Shadow right edge */
+    
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+
+/* ACTIVE STATE: Clicked down */
+.rocker-3d:active {
+  /* Rock to the other side */
+  transform: rotateY(35deg);
+}
+
+/* Change lighting when rocked the other way */
+.rocker-3d:active .rocker-text {
+    box-shadow: 
+    inset 2px 0 5px rgba(0,0,0,0.4),    /* Shadow left edge */
+    inset -2px 0 5px rgba(255,255,255,0.2); /* Highlight right edge */
+}
+
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="switch-perspective-container">
+                <button class="rocker-3d">
+                    <span class="rocker-text">I / O</span>
+                </button>
+                <h3>Let's Go!</h3>
+            </div>
+
+            
+        </main>
+    </body>
+</html>

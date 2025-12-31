@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Title</title>
+        <title>Musician Mixer</title>
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,8 +19,9 @@
 
             :root {
                 --color-dark: rgba(20,0,10,1);
-                --color-secondary: rgb(80, 0, 40);
-                --color-glow: rgb(242, 255, 100);
+                --color-secondary: rgb(120, 0, 80);
+                --color-blue: rgb(50, 50, 255);
+                --color-glow: rgb(255, 255, 100);
                 --color-neutral: rgb(255, 255, 255);
                 --color-white: #ffffff ;
 
@@ -32,15 +33,17 @@
                 --card-shadow: 0 4px 20px rgba(0,0,0,0.1);
                 
                 /* Font families */
-                --font-heading: "Special Elite", system-ui;
+                --font-heading: "Special Elite", Monoton, system-ui, sans-serif;
                 --font-body: "Montserrat", sans-serif;
+                --font-weight-body: 500;
                  
                 /* Font sizes */
-                --size-h1: clamp(3rem, 5vw + 1rem, 5rem);
-                --size-h2: clamp(2rem, 5vw + 1rem, 4rem);
-                --size-h3: clamp(1.6rem, 5vw + 1rem, 3.5rem);
-                --size-body: clamp(1rem, 5vw + 0.75rem, 1.25rem);
-
+                --size-h1: clamp(3.4rem, 5vw + 1rem, 5rem);
+                --size-h2: clamp(2.6rem, 5vw + 1rem, 3.5rem);
+                --size-h3: clamp(1.8rem, 5vw + 1rem, 2.25rem);
+                --size-body: clamp(1.25rem, calc(3vw + 0.25rem), 1.5rem);
+                
+                
                 /* Line heights and letter spacing */
                 --line-height-body: 1.6;
                 --line-height-tight: 1.2;
@@ -48,9 +51,9 @@
 
                 --text-main: var(--color-neutral);
                 --text-muted: ;
-                --text-inverse: var(--color-dark);;
-                --link-color: var(--color-glow);
-                --link-hover: var(--color-white);
+                --text-inverse: var(--color-dark);
+                --link-color: var(--color-blue);
+                --link-hover: var(--color-secondary);
             }
 
             * {
@@ -63,17 +66,18 @@
                 background-color: var(--bg-body); /* Background color for the whole page */
                 color: var(--text-main);               /* Default text color */
 
+                display: flex;
+                flex-direction: column;
+                align-content: center;
                 text-align: center;
-                justify-content: center;
-                justify-items: center;
-                align-items: center;
+
+                margin: 0 auto 2rem auto;
                 
                 font-family: var(--font-body);
                 font-optical-sizing: auto;
-                font-weight: 400;
+                font-weight: var(--font-weight-body);
                 font-size: var(--size-body);
                 font-style: normal;
-
                 line-height: var(--line-height-body);
                 -webkit-font-smoothing: antialiased; /* Improves font rendering */   
             }
@@ -81,7 +85,7 @@
             .spotlight-container {
                 position: fixed;
                 width: 100vw; height: 100vh;
-                background: #050505;
+                background: transparent;
                 z-index: -2;
                 overflow: hidden;
             }
@@ -107,18 +111,45 @@
                 font-family: var(--font-heading);
                 line-height: var(--line-height-tight);
                 letter-spacing: var(--letter-spacing-wide);
-                margin-bottom: 0.5em;
             }
 
-            h1 {font-size: var(--size-h1); animation: title-glow 6s ease-in-out infinite;}
+            h1 {       
+                font-size: var(--size-h1);         
+                text-shadow: 
+                    0 0 7px #fff,
+                    0 0 10px #fff,
+                    0 0 21px #fff,
+                    0 0 42px #bc13fe, /* The main neon color */
+                    0 0 82px #bc13fe,
+                    0 0 92px #bc13fe;
+
+                animation: flicker 5s infinite, slow-throb 10s infinite;
+            }
+
+            @keyframes flicker {
+                /* The sign is mostly ON */
+                0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                    text-shadow: 
+                    0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff,
+                    0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe;
+                    color: #fff;
+                }
+                
+                /* The sign 'dies' for a split second */
+                20%, 24%, 55% {        
+                    text-shadow: none;
+                    color: rgba(255, 255, 255, 0.2); /* Looks like the unlit glass tube */
+                }
+            }
+
+            @keyframes slow-throb {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.8; } /* Makes it feel slightly unstable */
+            }
+
             h2 {font-size: var(--size-h2);}
             h3 {font-size: var(--size-h3);}
-
-            @keyframes title-glow {
-                0%, 100% { text-shadow: 0 0 0px var(--color-white), 0 0 0px var(--color-white); }
-                50% { text-shadow: 0 0 3px var(--color-glow), 0 0 3px var(--color-glow); }
-            }
-
+            
             a {
                 color: var(--link-color);
                 transition: color 0.3s ease;
@@ -126,6 +157,67 @@
 
             a:hover {
                 color: var(--link-hover);
+            }
+
+            .switch-perspective-container {
+                perspective: 600px;
+                display: inline-block;
+                /* The black housing frame */
+                padding: 1rem;
+                background: var(--color-dark);
+                border-radius: 4px;
+                box-shadow: inset 0 1px 4px rgba(0,0,0,0.8);
+            }
+
+            .rocker-3d {
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                background: transparent;
+                /* Ensure the 3D transforms work on children */
+                transform-style: preserve-3d;
+                /* The pivot point is the dead center */
+                transform-origin: center center;
+                /* Smooth rocking motion */
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                
+                /* DEFAULT STATE: Tilted left side up */
+                transform: rotateY(-20deg);
+            }
+
+                /* The visible red face of the button */
+            .rocker-text {
+                display: block;
+                padding: 15px 45px;
+                font-family: sans-serif;
+                font-weight: bold;
+                color: white;
+                font-size: 18px;
+                
+                /* The red appearance with lighting gradient */
+                background: linear-gradient(to bottom, #e6333e, #a80000);
+                
+                /* Lighting changes based on tilt */
+                box-shadow: 
+                    inset 2px 0 5px rgba(255,255,255,0.5), /* Highlight left edge */
+                    inset -2px 0 5px rgba(0,0,0,0.4);    /* Shadow right edge */
+                    
+                transition: box-shadow 0.2s ease-in-out;
+            }
+
+
+            /* ACTIVE STATE: Clicked down */
+            .rocker-3d:active {
+                /* Rock to the other side */
+                transform: rotateY(35deg);
+            }
+
+            /* Change lighting when rocked the other way */
+            .rocker-3d:active .rocker-text {
+                    box-shadow: 
+                    inset 2px 0 5px rgba(0,0,0,0.4),    /* Shadow left edge */
+                    inset -2px 0 5px rgba(255,255,255,0.2); /* Highlight right edge */
+
             }
             
             details{
@@ -140,7 +232,7 @@
                 display: block;
                 padding: clamp(3rem, 4vw + 1rem, 20rem);
                 /* clamp(2rem, 4vw + 1rem, 4rem);*/
-                background: url('your-hero-image.jpg') center/cover no-repeat;
+                background: url('rock-concert.jpg') center/cover no-repeat;
             }
 
             /* The Overlay: Creates a dark tint over the image */
@@ -157,27 +249,138 @@
                 z-index: 1;
             }
 
+            .poster-card {
+                background-color: var(--color-glow); 
+                color: var(--text-inverse);
+                border: 5px solid #000;
+                width: min(90%, 800px);
+                padding: 2rem;
+                margin: 2rem auto;
+                text-align: center;
+                box-shadow: 10px 10px 0px #000; /* Sharp "pop art" shadow */
+                position: relative;
+            }
+
+            .poster-card::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                opacity: 0.3;
+                background-image: radial-gradient(#000 10%, transparent 10%);
+                background-size: 0.5rem 0.5rem; /* Tiny dots */
+                pointer-events: none;
+
+            }
+
+            .poster-card::after {
+                content: "";
+                position: absolute;
+                top: -20px;
+                left: 50%;
+                transform: translateX(-50%) rotate(-2deg);
+                width: 10rem;
+                height: 3rem;
+                background: rgba(255, 255, 255, 0.3); /* Translucent tape */
+                backdrop-filter: blur(2px);
+                border-left: 2px solid rgba(0,0,0,0.05);
+                border-right: 2px solid rgba(0,0,0,0.05);
+            }
+
+            .testimonial-stage {
+                position: relative;
+                perspective: 1000px; /* Essential for 3D depth */
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                width: min(90vw, 800px);
+                height: min(60vh,300px);
+                margin: 2rem auto;
+                
+                /* WALNUT WOOD DESIGN */
+                background-color: #3d2b1f; /* Base Walnut Brown */
+                background-image: 
+                    /* Layer 1: The "Polished Center" Glow */
+                    radial-gradient(circle at center, rgba(112, 81, 71, 0.3) 0%, transparent 40%),
+                    
+                    /* Layer 2: The "Wood Grain" Lines */
+                    /* We use 91 degrees so the lines aren't perfectly vertical (more organic) */
+                    repeating-linear-gradient(
+                        179deg,
+                        transparent,
+                        transparent 2px,
+                        rgba(0, 0, 0, 0.3) 3px,
+                        transparent 4px
+                    ),
+                    
+                    /* Layer 3: The Dark Varnish Variation */
+                    linear-gradient(to right, #422e1e, #684934, #2d1b0d);
+
+                /* Making it look like a physical table-top */
+                border-radius: 12px;
+                border: 1px solid #1a110a;
+                box-shadow: 
+                    inset 0 2px 10px rgba(255, 255, 255, 0.05), /* Subtle 'rim' light */
+                    0 15px 35px rgba(0, 0, 0, 0.5); /* Table drop shadow */
+                
+                overflow: visible; /* Ensure cards can 'flip' out of view */
+            }
+
+            .testimonial-card {
+                position: absolute;
+                background: #fff;
+                background-image: linear-gradient(#91d1d3 1px, transparent 1px);
+                background-size: 100% 1.5rem; /* Creates the "notebook lines" */
+
+                padding: 2rem;
+                margin: 2rem auto;
+                width: min(90vw, 600px); height: fit-content;
+
+                color: var(--color-blue);
+                
+                /* The "Torn Paper" jagged edge */
+                clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 95% 100%, 85% 94%, 75% 100%, 65% 95%, 55% 99%, 45% 94%, 35% 100%, 25% 95%, 15% 99%, 5% 94%, 0% 100%);
+                transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+                /* The card currently being read */
+            .testimonial-card.active {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                z-index: 2;
+                pointer-events: auto;
+            }
+
+                /* The 'Exit' animation (The Flip Away) */
+            .testimonial-card.exit {
+                opacity: 0;
+                transform: translateX(-120%) rotate(-15deg) scale(0.8);
+                z-index: 3;
+            }    
+
+            .testimonial-card:not(.active):not(.exit) {
+                opacity: 0.5; /* Peeking out */
+                transform: scale(0.95) translateX(-20px) translateY(10px) rotate(-2deg);
+            }
+
             .info-card {
                 position: relative;
-                width: min(90%, 800px);;
+                width: min(90%, 800px);
                 margin: 2rem auto;
                 padding: clamp(1rem, 4vw + 1rem, 3rem);
 
-                flex: 0 0 100%;            /* Each card takes up 100% of the width */
-                scroll-snap-align: center; /* Snaps the card to the center */
-                
-                background-color: #f9f7f1; /* Classic "Old Paper" cream */
-                background-image: 
-                    linear-gradient(135deg, rgba(0,0,0,0.02) 25%, transparent 25%),
-                    linear-gradient(225deg, rgba(0,0,0,0.02) 25%, transparent 25%);
+                background: #fff;
+                background-image: linear-gradient(#91d1d3 1px, transparent 1px);
+                background-size: 100% 1.5rem; /* Creates the "notebook lines" */
                 
                 color: var(--text-inverse);
-                
-                /*This creates a slightly "wobbly" rectangle */
-                clip-path: polygon(
-                    0% 2%, 100% 0%, 
-                    98% 100%, 2% 98%
-                );
+            
+                clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 95% 100%, 85% 94%, 75% 100%, 65% 95%, 55% 99%, 45% 94%, 35% 100%, 25% 95%, 15% 99%, 5% 94%, 0% 100%);
                 
                 /* A slight rotation makes it look like it was tossed on a table */
                 transform: rotate(1deg);
@@ -187,49 +390,34 @@
                     -2px -2px 10px rgba(255,255,255,0.5) inset; /* Inner highlight on "folds" */
             }
 
-            .info-card::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                right: 0;
-                border-width: 0 50px 50px 0;
-                border-style: solid;
-                border-color: #f9f7f1 #050505 #e3e1d9 #f9f7f1; /* Colors for the 'fold' and shadow */
-                display: block;
-                width: 0;
-                box-shadow: -3px 3px 5px rgba(0,0,0,0.1); /* Shadow of the fold */
-            }
+            .info-card p { margin-top: 1rem; color: var(--color-blue);}
+
+            
             
             .gallery-container {
-
                 display: flex;
                 flex-direction: column;
                 width: min(90%, 800px);
                 height: fit-content;
-                margin-inline: auto;
+                
+                justify-self: center;
                 justify-content: center;
                 align-items: center;
                 padding: 1rem 0;
             }
 
             .gallery-container iframe {
-                width: min(100%, 800px);
-                height: fit-content;
+                width: min(90%, 800px);
+                height: 500px;
                 border: 1px solid #bfcbda88;
                 border-radius: 12px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 
             }
-
-            .gallery-card {
-                background: var(--bg-card);
-                padding: 15px;
-                border-radius: var(--border-radius);
-            }
             
             .action-box {
                 width: min(90%, 800px);
-                padding: clamp(1rem, 4vw + 1rem, 3rem);
+                padding: clamp(1rem, 4vw + 1rem, 2rem);
                 margin: 3rem auto;
                 
                 background: rgba(255, 255, 255, 0.05);
@@ -245,9 +433,11 @@
                 will-change: transform, box-shadow; /* Pre-optimizes the phone's GPU */
             }
 
+            .action-box p {margin-bottom: 1rem;}
+
                 /* The "Bright" State (Triggered by Scroll) */
             .action-box.is-focused {
-                background: rgba(255, 255, 0, 0.8);
+                background: var(--color-glow);
                 border: 1px solid rgba(255, 255, 255, 0.6);
                 color: var(--text-inverse);
                 transform: scale(1.1); /* Subtle pop */
@@ -258,77 +448,9 @@
                     0 0 120px rgba(255, 255, 0, 0.4),  /* Mid-glow */
                     0 0 180px rgba(255, 255, 0, 0.2);  /* Large atmospheric glow */
                 }
-            /*
-                .action-box {
-                background-color: var(--color-glow);
-                border-top: 20px solid var(--color-secondary);
-                border-bottom: 20px solid var(--color-secondary);
-                color: var(--text-inverse);
 
-                width: 100%;
-
-                padding: 40px 20px;
-                margin-top: 40px;
-            }*/
-
-            .action-box button, .action-box .btn {
-                background-color: var(--color-secondary);
-                color: var(--text-main);
-                padding: 15px 30px;
-                border: none;
-                border-radius: 50px; /* Rounded pill shape */
-                font-weight: bold;
-                
-                cursor: pointer;
-                transition: transform 0.2s ease;
-            }
-
-            .action-box button:hover {
-                transform: scale(1.05); /* Slight grow on hover */
-            }
             
-
-            .divider { width: 100%; line-height: 0; transform: rotate(180deg); }
-            .divider svg { width: 100%; height: 100px; }
-            .divider svg path {
-                /* This creates the 'neon' effect */
-                filter: 
-                    drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) 
-                    drop-shadow(0 0 15px rgba(99, 102, 241, 0.6)); /* A hint of your spotlight purple */
-                    
-                /* Pro Move: Animate the glow to "pulse" like music */
-                animation: pulse-glow 6s ease-in-out infinite;
-                }
-
-                @keyframes pulse-glow {
-                0%, 100% { opacity: 0.8; stroke-width: 2; }
-                50% { opacity: 1; stroke-width: 4; }
-                }
-
-            /* ====================================================
-               2. SECTION-SPECIFIC
-               ====================================================*/
-            .testimonial-slider {
-                display: flex;
-                overflow-x: auto;          /* Allows horizontal scrolling */
-                scroll-snap-type: x mandatory; /* The "snap" magic */
-                gap: 20px;
-                padding: 20px;
-                scrollbar-width: none;     /* Hides scrollbar on Firefox */
-            }
-
-            .testimonial-slider::-webkit-scrollbar {
-                display: none;             /* Hides scrollbar on Chrome/Safari */
-            }
-
-            .testimonial-card {
-                flex: 0 0 100%;            /* Each card takes up 100% of the width */
-                scroll-snap-align: center; /* Snaps the card to the center */
-                background: var(--white);
-                padding: 40px;
-                border-radius: var(--border-radius);
-                box-shadow: var(--card-shadow);
-            }
+            
 
             /* This ensures your photos don't "break" the mobile screen */
             #media img {
@@ -366,19 +488,9 @@
                 <h2>Show up and let the music do the talking</h2>
             </section>
 
-            <div class="divider">
-                <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
-                    <path fill="none" 
-                        stroke="white" 
-                        stroke-width="3" 
-                        stroke-linecap="round" 
-                        d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,202.7C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,90.7L1440,64L144"></path>
-                </svg>
-            </div>
-
-            <section id="description" class="info-card">
-                <h2>Let's Jam!</h2>
-                <p>The Musician Mixer meets every other Friday at Bellinghome School of Music (2512 Meridian Street) 7-9pm. Registration is <a href="#register">required</a> so we know whether to set up 1 studio or more!</p>
+            <section id="description" class="poster-card">
+                <h2>Join the Jam!</h2>
+                <p>The Musician Mixer meets every other Friday at Bellinghome School of Music (2512 Meridian Street) 7-9pm. Registration is <a href="#next-events">required</a> so we know whether to set up 1 studio or more!</p>
             </section>
             
             <section id="next-events" class="gallery-container">
@@ -386,67 +498,84 @@
 
                 <iframe
                     src="https://luma.com/embed/calendar/cal-teaUwC6FjYtDHlX/events"
-                    width="600"
-                    height="450"
                     frameborder="0"
-                    style="border: 1px solid #bfcbda88; border-radius: 4px;"
                     allowfullscreen=""
                     aria-hidden="false"
                     tabindex="0"
                 ></iframe>
 
-                    <a href="/full-calendar" class="btn">See All Events</a>
-            </section>
-            
-            <section id="register" class="action-box">
-                <h2>Reserve Your Spot</h2>
-                <button>Reserve My Spot</button>
-            </section>
-
-            <section id="testimonials" class="gallery-container">
-                <h2>What the Musicians Say</h2>
-                <div class="testimonial-slider">
-                    <div class="info-card">
-                        <p>"The Music Mixer has been an incredible experience! I've met so many talented musicians and collaborated on some amazing projects."</p>
-                        <span>- Alex R.</span>
-                    </div>
-                    <div class="info-card">
-                        <p>"I never thought I'd find a community of musicians so welcoming and inspiring. The Music Mixer is my favorite event each month!"</p>
-                        <span>- Jamie L.</span>
-                    </div>
-                    <div class="info-card">
-                        <p>"As a beginner, I was nervous about joining, but the supportive environment at the Music Mixer made me feel right at home."</p>
-                        <span>- Taylor S.</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="community" class="action-box">
-                <h2>Join Our Community</h2>
-                <p>Connect with fellow musicians and stay updated on upcoming events by joining our community!</p>
-                <button>Join Now</button>
+                <a href="https://luma.com/calendar/cal-teaUwC6FjYtDHlX" 
+                    class="switch-perspective-container",
+                    target="_blank" 
+                    rel="noopener noreferrer">
+                        <button class="rocker-3d">
+                            <span class="rocker-text">See All Events</span>
+                        </button>
+                </a>
             </section>
 
             <section id="faqs" class="info-card">
                 <h2>Frequently Asked Questions</h2>
                 <details>
-                    <summary>What genres of music are welcome?</summary>
-                    <p>All genres are welcome! Whether you're into rock, jazz, classical, electronic, or any other style, we encourage you to bring your unique sound to the mixer.</p>
+                    <summary>What kind of skills do I need?</summary>
+                    <p>Be ready to jam with others! Keep a beat, listen to others, have a few chords and riffs ready. We're a welcoming community that will guide each other with the skills we have!</p>
                 </details>
                 <details>
                     <summary>Do I need to bring my own instruments?</summary>
-                    <p>While we have some basic instruments available, we recommend bringing your own to ensure you're comfortable and familiar with your gear.</p>
+                    <p>We've got a few amps, drum kit, and a jankety old keyboard. Bring anything else!</p>
                 </details>
                 <details>
                     <summary>Is there a fee to participate?</summary>
-                    <p>No, the Music Mixer is free to attend! We want to make music collaboration accessible to everyone in the community.</p> 
+                    <p>We just need to cover the rental cost of the studio and gear, which comes out to about $10 per person. Pay what you can!</p> 
                 </details>
             </section>
+
+            <section id="community" class="action-box">
+                <h2>Join Our Community</h2>
+                <p>Connect with fellow musicians and stay updated on upcoming events by joining our community!</p>
+                <a href="https://luma.com/calendar/cal-teaUwC6FjYtDHlX" 
+                    class="switch-perspective-container"
+                    target="_blank" 
+                    rel="noopener noreferrer">
+                        <button class="rocker-3d">
+                            <span class="rocker-text">Join Now</span>
+                        </button>
+                </a>
+            </section>
+
+            <h2>What the Musicians Say</h2>
+            <div class="testimonial-stage">
+                <div class="testimonial-card active">
+                    <p>"It's nice to meet up. I like to be in a musical mood with you all."</p>
+                    <span class="signature">-MK</span>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p>"I love playing music. I like you people."</p>
+                    <span class="signature">-HH</span>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p>"Not playing with you guys is a missing piece in my week..."</p>
+                    <span class="signature">-KS</span>
+                </div>
+
+                <div class="testimonial-card">
+                    <p>"I am always excited to play with you guys."</p>
+                    <span class="signature">-JS</span>
+                </div>
+            </div>
             
             <section id="subscribe" class="action-box">
                 <h2>Stay Updated!</h2>
                 <p>Subscribe to our newsletter to receive the latest news and updates about upcoming Musician Mixers.</p>
-                <button>Subscribe Now</button>
+                <a href="https://luma.com/calendar/cal-teaUwC6FjYtDHlX" 
+                    class="switch-perspective-container"
+                    target="_blank" 
+                    rel="noopener noreferrer">
+                        <button class="rocker-3d">
+                            <span class="rocker-text">Join Now</span>
+                        </button>
             </section>
             
             <section id="newsletter" class="info-card">
@@ -483,6 +612,37 @@
 
             boxes.forEach(box => boxObserver.observe(box));
             });
+
+            
+            function cycleTestimonials() {
+            const stage = document.querySelector('.testimonial-stage');
+            const cards = stage.querySelectorAll('.testimonial-card');
+            let currentIndex = 0;
+
+            setInterval(() => {
+                const currentCard = cards[currentIndex];
+                
+                // 1. Make the current card 'Flip Away'
+                currentCard.classList.remove('active');
+                currentCard.classList.add('exit');
+
+                // 2. Move to the next index (looping back to 0)
+                currentIndex = (currentIndex + 1) % cards.length;
+                const nextCard = cards[currentIndex];
+
+                // 3. Bring the next card to the front
+                nextCard.classList.remove('exit');
+                nextCard.classList.add('active');
+
+                // 4. Cleanup: Remove the exit class from the old card after it's gone
+                setTimeout(() => {
+                currentCard.classList.remove('exit');
+                }, 800); // Matches the CSS transition time
+                
+            }, 4000); // Change every 4 seconds
+            }
+
+            document.addEventListener('DOMContentLoaded', cycleTestimonials);
         </script>
     </body>
 </html>

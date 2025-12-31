@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Musician Mixer</title>
+        <style>
+            .spotlight-container {
+                position: fixed;
+                width: 100vw; height: 100vh;
+                background: #050505;
+                z-index: -2;
+                overflow: hidden;
+            }
+
+            .spotlight {
+                position: absolute;
+                width: 600px; height: 600px;
+                border-radius: 50%;
+                filter: blur(100px);
+                opacity: 0.4;
+                animation: drift 20s infinite alternate;
+            }
+
+            .s1 { background: #6366f1; top: -10%; left: -10%; }
+            .s2 { background: #ec4899; bottom: -10%; right: -10%; animation-delay: -5s; }
+
+            @keyframes drift {
+                from { transform: translate(0, 0) rotate(0deg); }
+                to { transform: translate(20%, 20%) rotate(30deg); }
+            }
+
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="spotlight-container">
+                <div class="spotlight s1"></div>
+                <div class="spotlight s2"></div>
+            </div>
+
+            <section id="page-intro" class="hero-banner">
+                <h1>Musician Mixer</h1>
+                <h2>Show up and let the music do the talking</h2>
+            </section>
+
+            <section id="description" class="info-card">
+                <h2>Let's Jam!</h2>
+                <p>The Musician Mixer meets every other Friday at Bellinghome School of Music (2512 Meridian Street) 7-9pm. Registration is <a href="#register">required</a> so we know whether to set up 1 studio or more!</p>
+            </section>
+            
+            <section id="next-events" class="gallery-container">
+                <h2>Upcoming Musician Mixers</h2>
+
+                <iframe
+                    src="https://luma.com/embed/calendar/cal-teaUwC6FjYtDHlX/events"
+                    frameborder="0"
+                    allowfullscreen=""
+                    aria-hidden="false"
+                    tabindex="0"
+                ></iframe>
+
+                    <a href="/full-calendar" class="btn">See All Events</a>
+            </section>
+            
+            <section id="register" class="action-box">
+                <h2>Reserve Your Spot</h2>
+                <button>Reserve My Spot</button>
+            </section>
+
+            <section id="testimonials" class="gallery-container">
+                <h2>What the Musicians Say</h2>
+                <div class="testimonial-slider">
+                    <div class="info-card">
+                        <p>"The Music Mixer has been an incredible experience! I've met so many talented musicians and collaborated on some amazing projects."</p>
+                        <span>- Alex R.</span>
+                    </div>
+                    <div class="info-card">
+                        <p>"I never thought I'd find a community of musicians so welcoming and inspiring. The Music Mixer is my favorite event each month!"</p>
+                        <span>- Jamie L.</span>
+                    </div>
+                    <div class="info-card">
+                        <p>"As a beginner, I was nervous about joining, but the supportive environment at the Music Mixer made me feel right at home."</p>
+                        <span>- Taylor S.</span>
+                    </div>
+                </div>
+            </section>
+            
+
+            <section id="community" class="action-box">
+                <h2>Join Our Community</h2>
+                <p>Connect with fellow musicians and stay updated on upcoming events by joining our community!</p>
+                <button>Join Now</button>
+            </section>
+
+            <section id="faqs" class="info-card">
+                <h2>Frequently Asked Questions</h2>
+                <details>
+                    <summary>What genres of music are welcome?</summary>
+                    <p>All genres are welcome! Whether you're into rock, jazz, classical, electronic, or any other style, we encourage you to bring your unique sound to the mixer.</p>
+                </details>
+                <details>
+                    <summary>Do I need to bring my own instruments?</summary>
+                    <p>While we have some basic instruments available, we recommend bringing your own to ensure you're comfortable and familiar with your gear.</p>
+                </details>
+                <details>
+                    <summary>Is there a fee to participate?</summary>
+                    <p>No, the Music Mixer is free to attend! We want to make music collaboration accessible to everyone in the community.</p> 
+                </details>
+            </section>
+
+    </body>
+</html>
