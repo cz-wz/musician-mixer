@@ -392,7 +392,61 @@
 
             .info-card p { margin-top: 1rem; color: var(--color-blue);}
 
+            .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            }
+
             
+            .input-group input {
+                width: 100%;
+                background: transparent; /* Makes the paper background show through */
+                border: none;
+                border-bottom: 2px solid #555; /* The 'line' to write on */
+                padding: 0.5rem 0;
+                margin-bottom: 2rem;
+                font-size: var(--font-body);
+                
+                color: var(--color-blue);
+                outline: none;
+                transition: border-color 0.3s ease;
+            }
+
+            /* When the user clicks into the field */
+            .input-group input:focus {
+                border-bottom-color: #ff0000; /* Line turns red, like a teacher's mark */
+            }
+
+            /* Styling the placeholder text to be subtle */
+            .input-group input::placeholder {
+                color: #aaa;
+                font-style: italic;
+            }
+
+            .paper-submit {
+                align-self: flex-start;
+                padding: 1rem 2rem;
+                background: transparent;
+                color: #d93636; /* Red ink color */
+                border: 3px solid #d93636;
+                font-family: 'Impact', sans-serif;
+                font-size: 1.2rem;
+                text-transform: uppercase;
+                transform: rotate(-3deg); /* Slightly crooked stamp look */
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .paper-submit:hover {
+            background: #d93636;
+            color: white;
+            transform: rotate(0deg) scale(1.05);
+            }
+
+            .paper-submit:active {
+            transform: scale(0.95); /* Physical feedback when 'stamped' */
+            }
             
             .gallery-container {
                 display: flex;
@@ -413,6 +467,14 @@
                 border-radius: 12px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 
+            }
+
+            .google-form-iframe {
+                width: min(90vw, 800px);            /* Default to 90% of viewport width */
+                height: 1600px;
+                border: none;
+                display: block;         /* Removes weird spacing at the bottom */
+                margin: 0 auto;         /* Centers the form on the page */
             }
             
             .action-box {
@@ -566,30 +628,11 @@
                 </div>
             </div>
             
-            <section id="subscribe" class="action-box">
-                <h2>Stay Updated!</h2>
-                <p>Subscribe to our newsletter to receive the latest news and updates about upcoming Musician Mixers.</p>
-                <a href="https://luma.com/calendar/cal-teaUwC6FjYtDHlX" 
-                    class="switch-perspective-container"
-                    target="_blank" 
-                    rel="noopener noreferrer">
-                        <button class="rocker-3d">
-                            <span class="rocker-text">Join Now</span>
-                        </button>
+            <section id="subscribe">
+                <h2>Subscribe to Updates</h2>
+                <iframe class="google-form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSeL7-aRt1z3OOACcxZFOhhieuTNSNqWH4DH12iEOxLc_gGhlQ/viewform?embedded=true">Loading…</iframe>
+                </iframe>
             </section>
-            
-            <section id="newsletter" class="info-card">
-                
-            </section>
-            
-            <section id="comment" class="action-box"></section>
-            <section id="contact" class="action-box"></section>
-            <section id="submit" class="action-box"></section>
-
-            <section id="featured" class="gallery-container"></section>
-            <section id="media" class="gallery-container"></section>
-            <section id="resources" class="gallery-container"></section>
-            
         </main>
         
         <footer class="global-footer">
@@ -608,7 +651,7 @@
                     entry.target.classList.remove('is-focused');
                 }
                 });
-            }, { threshold: 0.2 });
+            }, { threshold: 0.5 });
 
             boxes.forEach(box => boxObserver.observe(box));
             });
